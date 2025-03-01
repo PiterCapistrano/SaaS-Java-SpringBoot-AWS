@@ -1,4 +1,4 @@
-package com.pitercapistrano.usuarios;
+package com.meusaas.usuarios;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
