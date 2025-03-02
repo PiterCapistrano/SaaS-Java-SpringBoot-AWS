@@ -1,0 +1,36 @@
+version: "3.8"
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_meusaas
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: meusaas
+      MYSQL_USER: meusaasuser
+      MYSQL_PASSOWRD: meusaaspass
+    ports:
+      - "3307:3306"
+    networks:
+      - app-network
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin_meusaas
+    restart: always
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root
+    ports:
+      - "8080:80"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+
+volumes:
+  mysql-data:

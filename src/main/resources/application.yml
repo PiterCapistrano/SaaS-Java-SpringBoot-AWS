@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/meusaas
+    url: jdbc:mysql://localhost:3307/meusaas
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -14,6 +14,9 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+
+  flyway:
+    enabled: true
 
 springdoc:
   api-docs:
