@@ -1,7 +1,7 @@
 # 1. Visão Geral do Projeto
 
 Objetivo: Desenvolver uma aplicação SaaS que seja modular, escalável e resiliente, com foco em microserviços e integração com a AWS.
-Aprendizado: Você explorará desde a criação de APIs REST, segurança, comunicação entre serviços, persistência de dados, até deployment e monitoramento em nuvem.
+Explorarei desde a criação de APIs REST, segurança, comunicação entre serviços, persistência de dados, até deployment e monitoramento em nuvem.
 
 # 2. Arquitetura de Microserviços
 
