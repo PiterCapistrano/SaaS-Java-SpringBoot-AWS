@@ -6,14 +6,21 @@
 ## Configuração do projeto no Spring Initializr:
 
 Project: Maven
+
 Language: Java
+
 Spring Boot: 3.4.3
 
 Project Metadata:
+
 Group: com.meusaas
+
 Artifact: usuario-service
+
 name: usuario-service
+
 Description: SaaS em Java com Spring Boot e AWS
+
 Package name: com.meusaas.usuario-service
 
 ## Dependências:
