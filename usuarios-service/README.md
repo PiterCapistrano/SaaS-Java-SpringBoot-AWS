@@ -21,7 +21,7 @@ name: usuario-service
 
 Description: SaaS em Java com Spring Boot e AWS
 
-Package name: com.meusaas.usuario-service
+Package name: com.meusaas.usuario
 
 ## Dependências:
 
