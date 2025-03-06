@@ -410,3 +410,154 @@ O Spring Data JPA é uma ferramenta poderosa que agiliza e simplifica o desenvol
 Com exemplos práticos como a criação de uma entidade, a definição de um repositório e a utilização de consultas customizadas, é possível perceber como o Spring Data JPA torna o desenvolvimento mais produtivo e menos sujeito a erros, permitindo que você foque na lógica de negócio e não nos detalhes da persistência de dados.
 
 Esta abordagem modular e altamente integrada ao Spring torna o Spring Data JPA uma escolha popular para projetos que requerem uma camada de acesso a dados robusta e eficiente.
+
+## MySQL Driver:
+
+A dependência MySQL Driver – também conhecida como MySQL Connector/J – é o driver JDBC oficial fornecido pela Oracle para conectar aplicações Java a bancos de dados MySQL. Ela implementa as especificações da JDBC API, permitindo que os desenvolvedores realizem operações de CRUD, gerenciamento de transações e manipulação de dados de forma simples e integrada com o ecossistema Java.
+
+### 1. Configuração e Instalação
+Para utilizar o MySQL Connector/J, é necessário adicioná-lo ao projeto. Em projetos Maven, por exemplo, basta incluir a dependência no arquivo pom.xml:
+
+---
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>8.0.33</version>
+    </dependency>
+---
+Obs.: Verifique sempre a versão mais recente para aproveitar correções e novas funcionalidades.
+
+### 2. Funcionalidades e Utilidades
+   
+### Conexão e Comunicação com o Banco de Dados
+Driver JDBC Completo: Permite estabelecer conexões com o banco MySQL utilizando a classe DriverManager e o protocolo JDBC.
+URL de Conexão Personalizável: A string de conexão pode incluir parâmetros para definir comportamento como uso de SSL, timezone, codificação de caracteres e opções de performance.
+### Exemplo:
+---
+    String url = "jdbc:mysql://localhost:3306/meuBanco?useSSL=false&serverTimezone=UTC";
+---   
+### Execução de Consultas e Manipulação de Dados
+Statements e PreparedStatements: Suporta execução de comandos SQL através de objetos Statement e PreparedStatement, permitindo consultas, atualizações e operações em lote.
+ResultSet: Permite a manipulação dos resultados obtidos de uma consulta, possibilitando a leitura e iteração sobre os dados retornados.
+
+### Gerenciamento de Transações
+Controle de Auto-Commit: Possibilita ativar ou desativar o auto-commit para gerenciar transações manualmente, garantindo integridade dos dados em operações complexas.
+Rollback e Commit: Após agrupar operações, o desenvolvedor pode confirmar (commit) ou reverter (rollback) a transação conforme a lógica do negócio.
+
+### Recursos Avançados
+Suporte a SSL e Conexões Seguras: Oferece suporte nativo para conexões criptografadas, garantindo segurança na transmissão dos dados.
+Configurações de Performance: Diversos parâmetros de configuração (como caching de prepared statements, timeout, etc.) podem ser ajustados via URL ou propriedades do driver.
+Compatibilidade com JDBC: Totalmente compatível com as versões mais recentes da especificação JDBC, facilitando a integração com frameworks e bibliotecas que dependem desse padrão.
+
+### 3. Exemplos Práticos em Java
+   
+### Exemplo 1: Conexão Simples e Consulta de Dados
+---
+    import java.sql.Connection;
+    import java.sql.DriverManager;
+    import java.sql.ResultSet;
+    import java.sql.Statement;
+    
+    public class ExemploConexao {
+        public static void main(String[] args) {
+            // URL de conexão com parâmetros: sem SSL e timezone configurado
+            String url = "jdbc:mysql://localhost:3306/meuBanco?useSSL=false&serverTimezone=UTC";
+            String usuario = "root";
+            String senha = "minhaSenha";
+    
+            try {
+                // Registrar o driver (a partir do JDBC 4.0 não é obrigatório, mas pode ser incluído)
+                Class.forName("com.mysql.cj.jdbc.Driver");
+    
+                // Estabelecendo a conexão
+                Connection conexao = DriverManager.getConnection(url, usuario, senha);
+                System.out.println("Conexão estabelecida com sucesso!");
+    
+                // Criação do Statement para executar uma consulta SQL
+                Statement stmt = conexao.createStatement();
+                String sql = "SELECT id, nome, email FROM usuarios";
+                ResultSet rs = stmt.executeQuery(sql);
+    
+                // Iterando sobre os resultados
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String nome = rs.getString("nome");
+                    String email = rs.getString("email");
+                    System.out.println("ID: " + id + ", Nome: " + nome + ", Email: " + email);
+                }
+    
+                // Fechando recursos
+                rs.close();
+                stmt.close();
+                conexao.close();
+    
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+---
+### Exemplo 2: Utilizando PreparedStatement e Gerenciamento de Transações
+---
+    import java.sql.Connection;
+    import java.sql.DriverManager;
+    import java.sql.PreparedStatement;
+    import java.sql.SQLException;
+    
+    public class ExemploPreparedStatement {
+        public static void main(String[] args) {
+            String url = "jdbc:mysql://localhost:3306/meuBanco?useSSL=false&serverTimezone=UTC";
+            String usuario = "root";
+            String senha = "minhaSenha";
+    
+            Connection conexao = null;
+            PreparedStatement pstmt = null;
+    
+            try {
+                conexao = DriverManager.getConnection(url, usuario, senha);
+                // Desativando o auto-commit para controle manual de transações
+                conexao.setAutoCommit(false);
+    
+                String sqlInsert = "INSERT INTO usuarios (nome, email) VALUES (?, ?)";
+                pstmt = conexao.prepareStatement(sqlInsert);
+    
+                // Configurando parâmetros para o primeiro registro
+                pstmt.setString(1, "João Silva");
+                pstmt.setString(2, "joao.silva@example.com");
+                pstmt.executeUpdate();
+    
+                // Configurando parâmetros para o segundo registro
+                pstmt.setString(1, "Maria Souza");
+                pstmt.setString(2, "maria.souza@example.com");
+                pstmt.executeUpdate();
+    
+                // Comitando a transação se tudo ocorrer conforme o esperado
+                conexao.commit();
+                System.out.println("Inserção realizada com sucesso!");
+    
+            } catch (SQLException e) {
+                // Revertendo as alterações em caso de erro
+                if (conexao != null) {
+                    try {
+                        conexao.rollback();
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+                e.printStackTrace();
+            } finally {
+                // Fechando recursos
+                try {
+                    if (pstmt != null) pstmt.close();
+                    if (conexao != null) conexao.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+---
+### 4. Conclusão
+O MySQL Driver (Connector/J) é essencial para qualquer aplicação Java que necessite interagir com um banco de dados MySQL. Suas funcionalidades abrangem desde a simples conexão e execução de queries até o controle detalhado de transações e a implementação de recursos avançados como suporte a SSL e configurações de performance. Com exemplos claros em Java, é possível entender como aproveitar suas potencialidades e integrar de forma robusta e segura as operações com MySQL em aplicações Java.
+
+Esta abordagem modular e orientada a boas práticas facilita a manutenção, o desempenho e a escalabilidade das aplicações, tornando o uso do MySQL Connector/J uma escolha consolidada no desenvolvimento Java moderno.
