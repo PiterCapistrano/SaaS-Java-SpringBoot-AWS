@@ -68,29 +68,29 @@ Permitem mapear métodos do controlador para URLs específicas e definir o méto
 
 ### Exemplo 1 – API REST com @RestController:
 
-@RestController
-@RequestMapping("/api")
-public class HelloController {
-
-    @GetMapping("/hello")
-    public ResponseEntity<String> hello() {
-        return ResponseEntity.ok("Olá, mundo!");
+    @RestController
+    @RequestMapping("/api")
+    public class HelloController {
+    
+        @GetMapping("/hello")
+        public ResponseEntity<String> hello() {
+            return ResponseEntity.ok("Olá, mundo!");
+        }
     }
-}
 
 Nesse exemplo, a requisição GET para /api/hello retornará a mensagem "Olá, mundo!" em formato de resposta HTTP com status 200.
 
 ### Exemplo 2 – Aplicação MVC com @Controller:
 
-@Controller
-public class HomeController {
-
-    @GetMapping("/")
-    public String home(Model model) {
-         model.addAttribute("mensagem", "Bem-vindo ao Spring Web!");
-         return "home"; // Nome da view (ex.: home.html no Thymeleaf)
+    @Controller
+    public class HomeController {
+    
+        @GetMapping("/")
+        public String home(Model model) {
+             model.addAttribute("mensagem", "Bem-vindo ao Spring Web!");
+             return "home"; // Nome da view (ex.: home.html no Thymeleaf)
+        }
     }
-}
 
 Aqui, a URL raiz (/) é mapeada para um método que adiciona um atributo ao modelo e retorna o nome da view a ser renderizada.
 
@@ -144,19 +144,19 @@ O Spring Web possui suporte nativo para processamento de requisições multipart
 
 ### Exemplo – Upload de Arquivo:
 
-@RestController
-public class FileUploadController {
-
-    @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
-        // Processa o arquivo recebido
-        if (file.isEmpty()) {
-            return ResponseEntity.badRequest().body("Arquivo vazio!");
+    @RestController
+    public class FileUploadController {
+    
+        @PostMapping("/upload")
+        public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
+            // Processa o arquivo recebido
+            if (file.isEmpty()) {
+                return ResponseEntity.badRequest().body("Arquivo vazio!");
+            }
+            // Lógica para salvar o arquivo
+            return ResponseEntity.ok("Arquivo " + file.getOriginalFilename() + " enviado com sucesso!");
         }
-        // Lógica para salvar o arquivo
-        return ResponseEntity.ok("Arquivo " + file.getOriginalFilename() + " enviado com sucesso!");
     }
-}
 
 
 ---
@@ -167,18 +167,18 @@ Para melhorar a escalabilidade, o Spring Web permite o processamento assíncrono
 
 ### Exemplo – Processamento Assíncrono com Callable:
 
-@RestController
-public class AsyncController {
-
-    @GetMapping("/async")
-    public Callable<String> async() {
-         return () -> {
-              // Processamento demorado em background
-              Thread.sleep(2000); // Simula processamento
-              return "Processamento assíncrono completo!";
-         };
+    @RestController
+    public class AsyncController {
+    
+        @GetMapping("/async")
+        public Callable<String> async() {
+             return () -> {
+                  // Processamento demorado em background
+                  Thread.sleep(2000); // Simula processamento
+                  return "Processamento assíncrono completo!";
+             };
+        }
     }
-}
 
 
 ---
@@ -203,10 +203,10 @@ Realiza a configuração dos Message Converters, validadores e outros componente
 
 ### Exemplo de dependência no Maven:
 
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-web</artifactId>
-</dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
 
 Essa dependência reúne todos os componentes mencionados e facilita o início do desenvolvimento de aplicações web com Spring.
 
