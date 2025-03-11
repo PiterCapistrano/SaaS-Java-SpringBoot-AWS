@@ -15,7 +15,7 @@ public class UserDTO {
     this.roles = roles;
   }
 
-  public String getemail() {
+  public String getEmail() {
     return email;
   }
 
@@ -23,7 +23,7 @@ public class UserDTO {
     return password;
   }
 
-  public void setemail(String email) {
+  public void setEmail(String email) {
     this.email = email;
   }
 
