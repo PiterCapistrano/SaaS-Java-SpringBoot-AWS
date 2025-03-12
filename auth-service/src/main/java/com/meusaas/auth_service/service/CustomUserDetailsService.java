@@ -1,5 +1,7 @@
 package com.meusaas.auth_service.service;
 
+import java.util.Collections;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +26,6 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("Usuário não encontrado: " + useremail);
         }
          // Retorne um objeto User do Spring Security; aqui, as roles estão sendo ignoradas para simplificar
-        return User.withUsername(user.getEmail()).password(user.getPassword()).authorities(user.getRoles()).build();
+        return User.withUsername(user.getEmail()).password(user.getPassword()).authorities(Collections.emptyList()).build();
     }
 }

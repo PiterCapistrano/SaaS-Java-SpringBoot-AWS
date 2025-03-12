@@ -1,15 +1,17 @@
 package com.meusaas.auth_service.dto;
 
+import java.util.List;
+
 public class UserDTO {
   
   private String email;
   private String password;
-  private String roles;
+  private List<String> roles;
 
   public UserDTO() {
   }
 
-  public UserDTO(String email, String password, String roles) {
+  public UserDTO(String email, String password, List<String> roles) {
     this.email = email;
     this.password = password;
     this.roles = roles;
@@ -31,11 +33,11 @@ public class UserDTO {
     this.password = password;
   }
 
-  public String getRoles() {
+  public List<String> getRoles() {
     return roles;
   }
 
-  public void setRoles(String roles) {
+  public void setRoles(List<String> roles) {
     this.roles = roles;
   }
 }
