@@ -13,7 +13,7 @@ public class AuthenticationRequest {
     this.password = password;
   }
 
-  public String getemail() {
+  public String getEmail() {
     return email;
   }
 
@@ -21,7 +21,7 @@ public class AuthenticationRequest {
     return password;
   }
 
-  public void setemail(String email) {
+  public void setEmail(String email) {
     this.email = email;
   }
 
