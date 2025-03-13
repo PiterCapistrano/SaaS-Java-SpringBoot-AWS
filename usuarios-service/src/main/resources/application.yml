@@ -6,10 +6,16 @@ spring:
     name: usuarios-service
 
   datasource:
-    url: jdbc:mysql://localhost:3307/meusaas
+    url: jdbc:mysql://localhost:3307/meusaas?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      idle-timeout: 30000
+      connection-timeout: 30000
+      max-lifetime: 1800000
 
   jpa:
     hibernate:
@@ -18,9 +24,13 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
 
   flyway:
     enabled: true
+    baseline-on-migrate: true
+    baseline-version: 1
+    locations: classpath:db/migration
 
 springdoc:
   api-docs:
@@ -45,5 +55,5 @@ eureka:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
     lease-renewal-interval-in-seconds: 5
     lease-expiration-duration-in-seconds: 10
-    metadataMap:
+    metadata-map:
       instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
