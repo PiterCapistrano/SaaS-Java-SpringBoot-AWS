@@ -35,7 +35,7 @@ public class UsuarioController {
   }
 
   @Operation(summary = "Criar um novo usuário")
-  @PostMapping
+  @PostMapping("/cadastro")
   public ResponseEntity<Usuario> criarUsuario(@RequestBody @Valid UsuarioDTO usuarioDTO) {
     Usuario usuario = toEntity(usuarioDTO);
     return ResponseEntity.ok(service.criarUsuario(usuario));
